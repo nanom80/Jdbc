@@ -29,22 +29,27 @@ public class BookSelectAll {
 			// 3.SQL문 준비 / 바인딩 / 실행
 			// SQL문 준비
 			String query = "";
-			query += " select a.book_id,\r\n "
-				  +  "    a.title,\r\n "
-				  +  "    a.pubs,\r\n "
-				  +  "    date_format(pub_date,'%Y-%m-%d') pub_date,\r\n "
-				  +  "    a.author_id,\r\n "
-				  +  "    b.author_name,\r\n "
-				  +  "    b.author_desc\r\n "
-				  +  " from book a\r\n "
-				  +  "    join author b\r\n "
-				  +  "        on a.author_id = b.author_id\r\n "
-				  +  " order by a.book_id\r\n ";
+			query = """
+                    select a.book_id,
+				        a.title,
+				        a.pubs,
+				        date_format(pub_date,'%Y-%m-%d') pub_date,
+				        a.author_id,
+				        b.author_name,
+				        b.author_desc
+				    from book a
+				        join author b
+				            on a.author_id = b.author_id
+				    order by a.book_id
+				    """;
+			query = query.stripIndent().strip();
 			
 			// 바인딩
 			pstmt = conn.prepareStatement(query);
 			
 			System.out.println(bindQuery(query));
+			
+			System.out.println();
 			
 			// 실행
 			rs = pstmt.executeQuery();
@@ -86,6 +91,19 @@ public class BookSelectAll {
 						           baList.get(i).getAuthorDesc());
 			}
 			
+			System.out.println();
+			
+			for(BookAuthorVO baVO : baList) {
+				System.out.println(
+						baVO.getBookId()+"\t"+
+						baVO.getTitle()+"\t"+
+						baVO.getPubs()+"\t"+
+						baVO.getPubDate()+"\t"+
+						baVO.getAuthorId()+"\t"+
+						baVO.getAuthorName()+"\t"+
+						baVO.getAuthorDesc()
+						);
+			}
 			
 		} catch (ClassNotFoundException e) {
 		    System.out.println("error: 드라이버 로딩 실패 - " + e);

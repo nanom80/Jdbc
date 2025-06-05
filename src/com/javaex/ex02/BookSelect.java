@@ -29,12 +29,12 @@ public class BookSelect {
 			// 3.SQL문 준비 / 바인딩 / 실행
 			// SQL문 준비
 			String query = "";
-			query += " select book_id,\r\n"
-			       + "     title,\r\n"
-			       + "     pubs,\r\n"
-			       + "     pub_date,\r\n"
-			       + "     author_id\r\n"
-			       + " from book\n";
+			query = " select book_id,\r\n"
+			      + "     title,\r\n"
+			      + "     pubs,\r\n"
+			      + "     pub_date,\r\n"
+			      + "     author_id\r\n"
+			      + " from book\n";
 			
 			// 바인딩
 			pstmt = conn.prepareStatement(query);
