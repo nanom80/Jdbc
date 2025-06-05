@@ -20,7 +20,7 @@ public class AuthorVO {
 		this.authorDesc = authorDesc;
 	}
 	
-	//메소드gs
+	//메소드 gs
 	public int getAuthorId() {
 		return authorId;
 	}

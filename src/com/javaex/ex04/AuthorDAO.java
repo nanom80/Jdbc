@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDAO {
-	
 	//필드
 	// 0. import java.sql.*;
 	private Connection conn = null;
@@ -64,10 +63,8 @@ public class AuthorDAO {
 	    }
 	}
 	
-	
 	//입력
 	public int authorInsert(String name, String desc) {
-		
 		int count = -1;
 		
 		this.connect();
@@ -107,7 +104,6 @@ public class AuthorDAO {
 	
 	//수정
 	public int authorUpdate(int authorId, String name, String desc) {
-		
 		int count = -1;
 		
 		this.connect();
@@ -152,7 +148,6 @@ public class AuthorDAO {
 	
 	//삭제
 	public int authorDelete(int authorId) {
-		
 		int count = -1;
 		
 		this.connect();
@@ -187,14 +182,11 @@ public class AuthorDAO {
 		this.close();
 		
 		return count;
-		
 	}
 	
 	//조회
 	//작가리스트 조회
 	public List<AuthorVO> authorSelect() {
-		
-		int count = -1;
 		
 		List<AuthorVO> aList = new ArrayList<>();
 		
@@ -235,19 +227,13 @@ public class AuthorDAO {
 				aList.add(authorVO);
 			}
 			
-			count = aList.size();
-			
-			System.out.println("for문");
-			
 			for(int i=0; i<aList.size(); i++) {
 				System.out.println(aList.get(i).getAuthorId()+"\t"+
 						           aList.get(i).getAuthorName()+"\t"+
 						           aList.get(i).getAuthorDesc());
 			}
 			
-			count = aList.size();
-			
-			System.out.println(count + " 건이 조회되었습니다.");
+			System.out.println(aList.size() + " 건이 조회되었습니다.");
 			System.out.println();
 			
 			System.out.println("향상된for문");
@@ -260,9 +246,7 @@ public class AuthorDAO {
 						);
 			}
 			
-			count = aList.size();
-			
-			System.out.println(count + " 건이 조회되었습니다.");
+			System.out.println(aList.size() + " 건이 조회되었습니다.");
 			System.out.println();
 			
 		} catch (SQLException e) {
