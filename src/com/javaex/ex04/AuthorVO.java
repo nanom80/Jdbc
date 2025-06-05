@@ -6,7 +6,6 @@ public class AuthorVO {
 	private int authorId;
 	private String authorName;
 	private String authorDesc;
-	int count;
 	
 	//생성자
 	public AuthorVO() {

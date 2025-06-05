@@ -20,8 +20,12 @@ public class AuthorApp {
 		System.out.println("App: "+ c03 +" 건이 삭제되었습니다");
 		System.out.println();
 		
-		List<AuthorVO> aList = authorDAO.authorSelect();
+		List<AuthorVO> aList = authorDAO.authorSelect(36);
 		System.out.println("App: "+ aList.size() +" 건이 조회되었습니다");
+		System.out.println();
+		
+		List<AuthorVO> allList = authorDAO.authorSelectAll();
+		System.out.println("App: "+ allList.size() +" 건이 조회되었습니다");
 		System.out.println();
 		
 	}

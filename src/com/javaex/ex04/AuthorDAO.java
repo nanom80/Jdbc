@@ -31,7 +31,7 @@ public class AuthorDAO {
 	private void connect() {
 		System.out.println("DB연결");
 		try {
-			// 1. JDBC 드라이버 (Oracle) 로딩
+			// 1. JDBC 드라이버 (MySQL) 로딩
 			Class.forName(driver);
 
 		    // 2. Connection 얻어오기
@@ -41,7 +41,6 @@ public class AuthorDAO {
 		    System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
 		    System.out.println("error:" + e);
-		
 		}
 	}
 	
@@ -61,6 +60,7 @@ public class AuthorDAO {
 	    } catch (SQLException e) {
 	        System.out.println("error:" + e);
 	    }
+	    System.out.println("자원정리");
 	}
 	
 	//입력
@@ -186,7 +186,81 @@ public class AuthorDAO {
 	
 	//조회
 	//작가리스트 조회
-	public List<AuthorVO> authorSelect() {
+	public List<AuthorVO> authorSelect(int authorId) {
+		
+		List<AuthorVO> aList = new ArrayList<>();
+		
+		this.connect();
+		
+		try {
+			// 3.SQL문 준비 / 바인딩 / 실행
+			// SQL문 준비
+			String query = "";
+			query = """
+                    select author_id,
+				        author_name,
+				        author_desc
+				    from author
+				    where author_id = ?
+				    """;
+			query = query.stripIndent().strip();
+			
+			// 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, authorId);
+			
+			System.out.println(bindQuery(query));
+			
+			System.out.println();
+			
+			// 실행
+			rs = pstmt.executeQuery();
+			
+			// 4.결과처리 : 리스트
+			while(rs.next()) {
+				int aId = rs.getInt("author_id");
+				String authorName = rs.getString("author_name");
+				String authorDesc = rs.getString("author_desc");
+				
+				//자바의 데이터를 VO로 묶는다
+				AuthorVO authorVO = new AuthorVO(aId, authorName, authorDesc);
+				
+				//VO를 리스트에 추가(add()) 한다
+				aList.add(authorVO);
+			}
+			
+			for(int i=0; i<aList.size(); i++) {
+				System.out.println(aList.get(i).getAuthorId()+"\t"+
+						           aList.get(i).getAuthorName()+"\t"+
+						           aList.get(i).getAuthorDesc());
+			}
+			
+			System.out.println(aList.size() + " 건이 조회되었습니다.");
+			System.out.println();
+			
+			System.out.println("향상된for문");
+			
+			for(AuthorVO baVO : aList) {
+				System.out.println(
+						baVO.getAuthorId()+"\t"+
+						baVO.getAuthorName()+"\t"+
+						baVO.getAuthorDesc()
+						);
+			}
+			
+			System.out.println(aList.size() + " 건이 조회되었습니다.");
+			System.out.println();
+			
+		} catch (SQLException e) {
+		    System.out.println("error:" + e);
+		}
+		
+		this.close();
+		
+		return aList;
+	}
+	
+	public List<AuthorVO> authorSelectAll() {
 		
 		List<AuthorVO> aList = new ArrayList<>();
 		
@@ -216,12 +290,12 @@ public class AuthorDAO {
 			
 			// 4.결과처리 : 리스트
 			while(rs.next()) {
-				int authorId = rs.getInt("author_id");
+				int aId = rs.getInt("author_id");
 				String authorName = rs.getString("author_name");
 				String authorDesc = rs.getString("author_desc");
 				
-				//자바의 데이터를 VO로 묶는다
-				AuthorVO authorVO = new AuthorVO(authorId, authorName, authorDesc);
+				//데이터를 VO로 묶는다
+				AuthorVO authorVO = new AuthorVO(aId, authorName, authorDesc);
 				
 				//VO를 리스트에 추가(add()) 한다
 				aList.add(authorVO);
